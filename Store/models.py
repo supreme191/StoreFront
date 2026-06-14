@@ -13,6 +13,7 @@ class Collection(models.Model) :
 
 class Product(models.Model) :
     title = models.CharField(max_length=255)
+    slug = models.SlugField(default='-')
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     inventory = models.IntegerField()
@@ -43,6 +44,7 @@ class Address(models.Model) :
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    zip = models.CharField(max_length=6)
 
 
 class Orders(models.Model) :
