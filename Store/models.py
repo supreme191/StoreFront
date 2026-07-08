@@ -5,10 +5,19 @@ class Promotions(models.Model) :
     description = models.TextField(max_length=255)
     discount = models.FloatField()
 
+    def __str__(self) -> str :
+        return self.description
+
 
 class Collection(models.Model) :
     title = models.CharField(max_length=255)
     featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='+')
+
+    def __str__(self) -> str :
+        return self.title
+    
+    class Meta :
+        ordering = ['title']
 
 
 class Product(models.Model) :
@@ -20,6 +29,12 @@ class Product(models.Model) :
     last_update = models.DateTimeField(auto_now=True)
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
     promotions = models.ManyToManyField(Promotions)
+
+    def __str__(self) -> str :
+        return self.title
+    
+    class Meta :
+        ordering = ['title']
 
 
 class Customer(models.Model) :
@@ -39,6 +54,9 @@ class Customer(models.Model) :
     phone = models.CharField(max_length=10)
     birthdate = models.DateField(null=True)
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=BRONZE_MEMBERSHIP)
+
+    def __str__(self) -> str :
+        return f'{self.first_name} {self.last_name}'
 
 class Address(models.Model) :
     street = models.CharField(max_length=255)
@@ -61,6 +79,7 @@ class Orders(models.Model) :
     placed_at = models.DateTimeField(auto_now_add=True)
     payment_status = models.CharField(max_length=1, choices=PAYMNET_STATUS, default=PAYMENT_PENDING)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
 
 class OrderItem(models.Model) :
     order=models.ForeignKey(Orders, on_delete=models.PROTECT)

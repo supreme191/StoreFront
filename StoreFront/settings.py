@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'playground',
     'Store',
     'Tags',
     'Likes',
@@ -90,7 +91,7 @@ DATABASES = {
         'HOST' : 'localhost',
         'USER' : 'root',
         # Enter your username and password here (Based on the credentials from MySQL server.)
-        'PASSWORD' : 'PASSWORD',
+        'PASSWORD' : 'password',
     }
 }
 
