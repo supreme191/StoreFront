@@ -38,12 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'playground',
+
     'Store',
     'Tags',
     'Likes',
     'debug_toolbar',
 ]
+
+REST_FRAMEWORK = {
+	'COERCE_DECIMAL_TO_STRING' : False
+}
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",

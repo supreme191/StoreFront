@@ -21,4 +21,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('playground/', include("playground.urls")),
+    path('', include("Store.urls"))
 ] + debug_toolbar_urls()
