@@ -55,11 +55,13 @@ class ProductAdmin(admin.ModelAdmin) :
 class CustomerAdmin(admin.ModelAdmin) :
     list_display = ['name', 'membership']
     list_editable = ['membership']
-    ordering = ['first_name']
+    list_select_related = ['user']
+    ordering = ['user__first_name', 'user__last_name']
     list_per_page = 10
 
+    @admin.display(ordering='user__first_name')
     def name(self, customer) :
-        return (customer.first_name + ' ' + customer.last_name)
+        return (f'{customer.user.first_name} {customer.user.last_name}')
 
     
 @admin.register(models.Orders)

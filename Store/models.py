@@ -1,6 +1,7 @@
 from django.db import models
 from uuid import uuid4
 from django.core.validators import MinValueValidator
+from django.conf import settings
 
 # Create your models here.
 class Promotions(models.Model) :
@@ -50,15 +51,17 @@ class Customer(models.Model) :
         (PLATINUM_MEMBERSHIP, "Platinum"),
     ]
 
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
     phone = models.CharField(max_length=10)
     birthdate = models.DateField(null=True)
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=BRONZE_MEMBERSHIP)
 
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     def __str__(self) -> str :
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.user.first_name} {self.user.last_name}'
+    
+    class Meta :
+        ordering = ['user__first_name', 'user__last_name']
 
 class Address(models.Model) :
     street = models.CharField(max_length=255)
@@ -81,6 +84,11 @@ class Orders(models.Model) :
     placed_at = models.DateTimeField(auto_now_add=True)
     payment_status = models.CharField(max_length=1, choices=PAYMNET_STATUS, default=PAYMENT_PENDING)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+    class Meta :
+        permissions = [
+            ('cancel_order', 'Can cancel order')
+        ]
 
 
 class OrderItem(models.Model) :
