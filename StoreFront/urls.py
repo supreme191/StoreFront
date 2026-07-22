@@ -21,5 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('playground/', include("playground.urls")),
-    path('', include("Store.urls"))
+    path('', include("Store.urls")),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
 ] + debug_toolbar_urls()
