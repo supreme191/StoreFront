@@ -14,6 +14,7 @@ products_router.register('reviews', views.ReviewViewSet, basename='product-revie
 cart_router = routers.NestedDefaultRouter(router, 'cart', lookup= 'cart')
 cart_router.register('items', views.CartItemViewSet, basename= 'cart-items')
 
-router.register('customer', views.CustomerViewSet, )
+router.register('customer', views.CustomerViewSet)
+router.register('orders', viewset=views.OrderViewSet, basename='orders')
 
 urlpatterns = router.urls + products_router.urls +cart_router.urls

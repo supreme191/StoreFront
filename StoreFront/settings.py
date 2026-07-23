@@ -116,7 +116,7 @@ DATABASES = {
         'HOST' : 'localhost',
         'USER' : 'root',
         # Enter your username and password here (Based on the credentials from MySQL server.)
-        'PASSWORD' : '19121@Sau18128',
+        'PASSWORD' : 'password',
     }
 }
 
