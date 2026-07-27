@@ -2,6 +2,7 @@ from django.db import models
 from uuid import uuid4
 from django.core.validators import MinValueValidator
 from django.conf import settings
+from . import validators
 
 # Create your models here.
 class Promotions(models.Model) :
@@ -38,6 +39,11 @@ class Product(models.Model) :
     
     class Meta :
         ordering = ['title']
+
+
+class ProductImage(models.Model) :
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='Store/images', validators=[validators.valid_file_size])
 
 
 class Customer(models.Model) :

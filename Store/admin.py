@@ -35,9 +35,19 @@ class TagInline(GenericTabularInline) :
     autocomplete_fields = ['tag']
 
 
+class ProductImageInline(admin.TabularInline) :
+    model = models.ProductImage
+    readonly_fields = ['thumbnail']
+
+    def thumbnail(self, instance) :
+        if instance.image.name != '' :
+            return format_html(f'<img src="{instance.image.url}" class= "thumbnail" />')
+        return ''
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin) :
-    inlines = [TagInline]
+    inlines = [TagInline, ProductImageInline]
     list_display = ['title', 'price', 'collection_title', 'inventory_status']
     list_per_page = 20
     list_editable = ['price']
@@ -49,6 +59,11 @@ class ProductAdmin(admin.ModelAdmin) :
 
     def inventory_status(self, product) :
         return 'Low' if product.inventory < 60 else "OK"
+
+    class Media :
+        css= {
+            'all' : ['store/styles.css']
+        }
 
 
 @admin.register(models.Customer)
